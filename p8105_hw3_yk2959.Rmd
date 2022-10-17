@@ -287,3 +287,26 @@ In January, there are two outliers of average tmax of -16.6 and -16.1 degree cel
 
 In July, there are two outliers of average tmax of 14.0 degree celsius at 1998. This value is lower than the rest of the value. 
 
+
+```{r}
+tmax_tmin = ny_noaa %>% 
+  drop_na() %>%
+  ggplot(aes(x = tmax_c, y=tmin_c)) + geom_hex() + 
+  labs(title = "Hexplot showing depicting maximum temperature versus minimum temperature",
+    x = "Maximum temperature in celsius",
+    y = "Minimum temperature in celsius") 
+
+snowfall_dist = ny_noaa %>% 
+  drop_na() %>%
+  filter (snow>0 & snow<100) %>% 
+  ggplot(aes(x = snow, y = year)) + geom_density_ridges() + 
+  labs(title = "Density ridge line showing the distribution of snowfall values", 
+       x="Snowfall (mm)",
+       y="year")
+                                          
+tmax_tmin / snowfall_dist
+
+```
+
+I created a a two-panel plot showing (i) a hexplot depicting tmax vs tmin for the full dataset ; and (ii) a density ridgeline plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
+
