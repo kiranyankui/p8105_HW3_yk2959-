@@ -152,3 +152,16 @@ There are `r ncol(accel_df)` rows(observations) and `r nrow(accel_df)` columns v
 Each observation(row) aligns with a single activity of this individual. 
 
 There are 6 variables `r colnames(accel_df)`corresponding to week, day ID, day of the week, activity minute, activity amount, and whether the activity was conducted on a weekday or a weekend, respectively.  
+
+```{r}
+# New table showing aggregation across minutes
+accel_df_2 = accel_df %>% 
+group_by(week, day) %>% 
+  summarize(total_activity = sum(activity_amount)) %>% 
+  pivot_wider(names_from = day,
+              values_from = total_activity)
+```
+
+I aggregated across minutes to create a total activity variable for each day, and create a table showing these totals called accel_df_2. 
+
+Some trends are apparent. My results show that physical activity was highest on Fridays with and lowest on Saturdays. 
