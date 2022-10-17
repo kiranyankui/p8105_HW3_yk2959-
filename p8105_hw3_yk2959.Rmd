@@ -239,3 +239,51 @@ Data cleaning:
 
 For snowfall, the most commonly observed values is `r names(which.max(table(ny_noaa$snow)))` because most days in the year do not have snow. 
 
+```{r}
+#making a plot
+avg_max_temp_Jan_July = ny_noaa %>%  
+  group_by(id, month, year) %>% 
+  filter (month=="January" | month=="July") %>% 
+   summarize (average_tmax = mean(tmax_c), na.rm=TRUE) 
+  
+  
+ggplot(avg_max_temp_Jan_July, aes(x=year, y=average_tmax)) +
+  geom_point() +
+  geom_path() + 
+  facet_grid(. ~ month) + 
+  labs(title = "Scatterplot showing the average maximum temperature in January and in July in each station across years",
+    x = "Year",
+    y = "Average maximum temperature") 
+
+# Finding minium maximum average tmax for January 
+avg_max_temp_Jan_July %>% 
+  filter(month=="January") %>% 
+  select(average_tmax, year) %>% 
+  arrange(average_tmax)
+
+avg_max_temp_Jan_July %>% 
+  filter(month=="July") %>% 
+  select(average_tmax, year) %>% 
+  arrange(average_tmax)
+
+```
+
+I created a two-panel scatterplot showing the average maximum temperature in January and in July in each station across years. 
+
+Yes, in terms of interpretable structure, comparing the scatterplot for January and July, we can see that the maximum temperatures in January are much lower compared to the maximum temperatures in July.  
+
+* The mean maximum temperatures in January across the years is `r avg_max_temp_Jan_July %>% filter(month == "January") %>% pull(average_tmax) %>% mean()`. 
+
+* The mean maximum temperatures in July across the years is `r avg_max_temp_Jan_July  %>% filter(month == "July") %>% pull(average_tmax) %>% mean()`. This is approximately 27 degree celsius higher than the mean maximum temperature in January. 
+
+* In the scatterplot for January, range of tmax is `r avg_max_temp_Jan_July %>% filter(month == "January") %>% pull(average_tmax) %>% range()`. 
+
+* In the scatterplot for January, range of tmax is `r avg_max_temp_Jan_July %>% filter(month == "July") %>% pull(average_tmax) %>% range()`. 
+
+__Outliers__ 
+Yes. There are outliers present. 
+
+In January, there are two outliers of average tmax of -16.6 and -16.1 degree celsius at 1982 and 1996 respectively. These values are lower than the rest of the values. 
+
+In July, there are two outliers of average tmax of 14.0 degree celsius at 1998. This value is lower than the rest of the value. 
+
