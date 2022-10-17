@@ -165,3 +165,22 @@ group_by(week, day) %>%
 I aggregated across minutes to create a total activity variable for each day, and create a table showing these totals called accel_df_2. 
 
 Some trends are apparent. My results show that physical activity was highest on Fridays with and lowest on Saturdays. 
+
+```{r}
+#Plot showing the 24-hour activity time courses for each day
+ggplot(accel_df, aes(x=activity_minute, y=activity_amount, color=day)) + geom_point() +
+  scale_x_continuous(breaks = c(120, 240, 360, 480, 600, 720, 840, 960,1080, 1200, 1320, 1440),
+  limits = c(1, 1500)) + 
+  labs(title = "Scatterplot showing the 24-hour activity time courses for each day",
+    x = "Day",
+    y = "Total Activity")
+
+```
+
+I made a single-panel scatterplot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. 
+
+The plot shows on the y-axis, the amount of physical activity, referring to the amount of activity that the individual performed in a specific minute. The x-axis is the activity number, refers to the specific minute that the physical activity was performed. Colors indicate the day of the week.
+
+The scatterplot shows that between 0 to 300 minutes in the day (first 5h of the day between midnight and 5am), there was a low level of activity performed because the individual is likely still sleeping. Then, the level of physical activity increased and is at its peak between 360 minutes and 1320 minutes (between 6am and 10pm). The scatterplot shows that after 1380 minutes (11pm) in the day, the physical activity starts to decline again as the individual winds down for bedtime. 
+
+Furthermore, peak physical activity levels occurs at different times on different days of the week. For instance, the peak physical activity levels on Sunday occurs around 600 minutes to 720 minutes, between 10am and 12pm. On the other hand, peak physical activity levels on Wednesday occurs between 1140 minutes and 1200 minutes, which is around 7pm and 8pm. This indicates that the individual has a different exercise schedule dependent on days of the week. 
