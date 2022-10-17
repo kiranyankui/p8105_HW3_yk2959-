@@ -184,3 +184,30 @@ The plot shows on the y-axis, the amount of physical activity, referring to the 
 The scatterplot shows that between 0 to 300 minutes in the day (first 5h of the day between midnight and 5am), there was a low level of activity performed because the individual is likely still sleeping. Then, the level of physical activity increased and is at its peak between 360 minutes and 1320 minutes (between 6am and 10pm). The scatterplot shows that after 1380 minutes (11pm) in the day, the physical activity starts to decline again as the individual winds down for bedtime. 
 
 Furthermore, peak physical activity levels occurs at different times on different days of the week. For instance, the peak physical activity levels on Sunday occurs around 600 minutes to 720 minutes, between 10am and 12pm. On the other hand, peak physical activity levels on Wednesday occurs between 1140 minutes and 1200 minutes, which is around 7pm and 8pm. This indicates that the individual has a different exercise schedule dependent on days of the week. 
+
+# Problem 3
+
+### I have loaded and explored the ny_noaa dataset.  
+```{r}
+#Loading the dataset and exploring the dataset
+library(p8105.datasets)
+data("ny_noaa")
+```
+
+There are `r ncol(ny_noaa)` rows(observations) and `r nrow(ny_noaa)` columns variables in this dataset. Each row refers to a single daily observation from a weather station in the US.
+
+There are 6 variables `r colnames(ny_noaa)`corresponding to id, date, precipitation (tenths of mm), snow fall (mm), snow depth (mm), maximum and minimum temperature (tenths of degrees C), respectively.
+
+Missing data is a large issue for this dataset. The variables, tmax, tmin, prcp, snow and snwd have large amounts of missing data. 
+
+Missing values is indicated below: 
+
+* The tmax variable is missing `r ny_noaa %>% filter(is.na(tmax)) %>% count` observations. 
+
+* The tmin variable is missing `r ny_noaa %>% filter(is.na(tmin)) %>% count` observations.
+
+* The prcp (precipitation) variable is missing `r ny_noaa %>% filter(is.na(prcp)) %>% count` observations. 
+
+* The snow (snowfall) variable is missing `r ny_noaa %>% filter(is.na(snow)) %>% count` observations. 
+
+* The snwd (snow depth) variable is missing `r ny_noaa %>% filter(is.na(snwd)) %>% count` observations. 
