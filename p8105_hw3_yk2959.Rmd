@@ -46,7 +46,7 @@ instacart
 
 ```
 
-his dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns, with each row resprenting a single product from an instacart order.
+This dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns, with each row resprenting a single product from an instacart order.
 
 Variables include: 
 
@@ -130,7 +130,7 @@ accel_df <- read_csv("./data/accel_data.csv") %>%
      cols = activity_1:activity_1440,
      names_to = "activity_minute",
      names_prefix = "activity_",
-     values_to = "activity_amount") %>% 
+     values_to = "activity_count") %>% 
   mutate(wkday_wkend = case_when(
         day == "Saturday" ~ "weekend",
         day == "Sunday" ~ "weekend",
@@ -151,13 +151,13 @@ There are `r ncol(accel_df)` rows(observations) and `r nrow(accel_df)` columns v
 
 Each observation(row) aligns with a single activity of this individual. 
 
-There are 6 variables `r colnames(accel_df)`corresponding to week, day ID, day of the week, activity minute, activity amount, and whether the activity was conducted on a weekday or a weekend, respectively.  
+There are 6 variables `r colnames(accel_df)`corresponding to week, day ID, day of the week, activity minute, activity count, and whether the activity was conducted on a weekday or a weekend, respectively.  
 
 ```{r}
 # New table showing aggregation across minutes
 accel_df_2 = accel_df %>% 
 group_by(week, day) %>% 
-  summarize(total_activity = sum(activity_amount)) %>% 
+  summarize(total_activity = sum(activity_count)) %>% 
   pivot_wider(names_from = day,
               values_from = total_activity)
 ```
@@ -168,7 +168,7 @@ Some trends are apparent. My results show that physical activity was highest on 
 
 ```{r}
 #Plot showing the 24-hour activity time courses for each day
-ggplot(accel_df, aes(x=activity_minute, y=activity_amount, color=day)) + geom_point() +
+ggplot(accel_df, aes(x=activity_minute, y=activity_count, color=day)) + geom_point() +
   scale_x_continuous(breaks = c(120, 240, 360, 480, 600, 720, 840, 960,1080, 1200, 1320, 1440),
   limits = c(1, 1500)) + 
   labs(title = "Scatterplot showing the 24-hour activity time courses for each day",
@@ -179,7 +179,7 @@ ggplot(accel_df, aes(x=activity_minute, y=activity_amount, color=day)) + geom_po
 
 I made a single-panel scatterplot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. 
 
-The plot shows on the y-axis, the amount of physical activity, referring to the amount of activity that the individual performed in a specific minute. The x-axis is the activity number, refers to the specific minute that the physical activity was performed. Colors indicate the day of the week.
+The plot shows on the y-axis, physical activity count, referring to the amount of activity that the individual performed in a specific minute. The x-axis is the activity number, refers to the specific minute that the physical activity was performed. Colors indicate the day of the week.
 
 The scatterplot shows that between 0 to 300 minutes in the day (first 5h of the day between midnight and 5am), there was a low level of activity performed because the individual is likely still sleeping. Then, the level of physical activity increased and is at its peak between 360 minutes and 1320 minutes (between 6am and 10pm). The scatterplot shows that after 1380 minutes (11pm) in the day, the physical activity starts to decline again as the individual winds down for bedtime. 
 
