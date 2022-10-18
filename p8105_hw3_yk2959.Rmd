@@ -1,6 +1,6 @@
 ---
-title: "Homework 3 new"
-author: "Kiran Kui"
+title: "Homework 3"
+author: "Kiran Kui yk2959"
 date: "`r Sys.Date()`"
 output: github_document
 ---
@@ -187,12 +187,12 @@ Furthermore, peak physical activity levels occurs at different times on differen
 
 # Problem 3
 
-### I have loaded and explored the ny_noaa dataset.  
 ```{r}
 #Loading the dataset and exploring the dataset
 library(p8105.datasets)
 data("ny_noaa")
 ```
+I have loaded and explored the ny_noaa dataset.  
 
 There are `r ncol(ny_noaa)` rows(observations) and `r nrow(ny_noaa)` columns variables in this dataset. Each row refers to a single daily observation from a weather station in the US.
 
@@ -292,7 +292,7 @@ In July, there are two outliers of average tmax of 14.0 degree celsius at 1998. 
 tmax_tmin = ny_noaa %>% 
   drop_na() %>%
   ggplot(aes(x = tmax_c, y=tmin_c)) + geom_hex() + 
-  labs(title = "Hexplot showing depicting maximum temperature versus minimum temperature",
+  labs(title = "Tmax versus Tmin",
     x = "Maximum temperature in celsius",
     y = "Minimum temperature in celsius") 
 
@@ -300,11 +300,11 @@ snowfall_dist = ny_noaa %>%
   drop_na() %>%
   filter (snow>0 & snow<100) %>% 
   ggplot(aes(x = snow, y = year)) + geom_density_ridges() + 
-  labs(title = "Density ridge line showing the distribution of snowfall values", 
+  labs(title = "Distribution of snowfall values", 
        x="Snowfall (mm)",
        y="year")
                                           
-tmax_tmin / snowfall_dist
+tmax_tmin + snowfall_dist
 
 ```
 
